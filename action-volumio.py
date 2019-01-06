@@ -86,10 +86,10 @@ class SkillVolumio:
 
     @staticmethod
     def execute_volumio_command(command, *args):
-        # parameters = []
-        # for arg in args:
-        #     [].append()
-        call(["volumio", command, args])
+        parameters = ["volumio", "command"]
+        for arg in args:
+            [].append(arg)
+        call(parameters)
 
     def extract_volume_higher(self, intent_message, default_volume):
         volume = default_volume
