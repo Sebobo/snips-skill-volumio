@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 # See https://volumio.github.io/docs/API/Command_Line_Client.html for commands
@@ -30,6 +30,7 @@ class SkillVolumio:
         self.thread_handler = ThreadHandler()
         self.thread_handler.run(target=self.start_blocking)
         self.thread_handler.start_run_loop()
+        print("[VOLUMIO] Started")
 
         self.actions = {
             "volumeUp": self.volume_up,
@@ -48,7 +49,7 @@ class SkillVolumio:
         }
 
     def callback(self, hermes, intent_message):
-        print("[VOLUMIO] Received")
+        print("[VOLUMIO] Received intent {}".format(intent_message.intent.intent_name))
 
         result = self.actions[intent_message.intent.intent_name](hermes, intent_message)
         self.terminate_feedback(hermes, intent_message, result or "")
@@ -85,7 +86,10 @@ class SkillVolumio:
 
     @staticmethod
     def execute_volumio_command(command, *args):
-        call(["volumio", command, *args])
+        # parameters = []
+        # for arg in args:
+        #     [].append()
+        call(["volumio", command, args])
 
     def extract_volume_higher(self, intent_message, default_volume):
         volume = default_volume
