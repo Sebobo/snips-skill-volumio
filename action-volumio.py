@@ -32,7 +32,10 @@ class SkillVolumio:
         self.thread_handler.start_run_loop()
         print("[VOLUMIO] Started")
 
-        self.actions = {
+    def callback(self, hermes, intent_message):
+        print("[VOLUMIO] Received intent {}".format(intent_message.intent.intent_name))
+
+        actions = {
             "volumeUp": self.volume_up,
             "volumeDown": self.volume_down,
             "resumeMusic": self.resume_music,
@@ -48,10 +51,7 @@ class SkillVolumio:
             "playPlaylist": self.not_implemented,
         }
 
-    def callback(self, hermes, intent_message):
-        print("[VOLUMIO] Received intent {}".format(intent_message.intent.intent_name))
-
-        result = self.actions[intent_message.intent.intent_name](hermes, intent_message)
+        result = actions[intent_message.intent.intent_name](hermes, intent_message)
         self.terminate_feedback(hermes, intent_message, result or "")
 
     def start_blocking(self, run_event):
